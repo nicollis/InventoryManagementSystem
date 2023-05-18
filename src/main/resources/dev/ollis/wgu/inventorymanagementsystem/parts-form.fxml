@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.ollis.wgu.inventorymanagementsystem.PartsFormViewController">
+   <children>
+      <Text fx:id="title_text" layoutX="42.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Part" AnchorPane.leftAnchor="42.0" AnchorPane.topAnchor="46.326171875">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Text>
+      <RadioButton layoutX="146.0" layoutY="45.0" mnemonicParsing="false" onMouseReleased="#inhouse_selected" selected="true" text="In-House" AnchorPane.leftAnchor="146.0" AnchorPane.topAnchor="45.326171875">
+         <toggleGroup>
+            <ToggleGroup fx:id="attainment" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="300.0" layoutY="45.0" mnemonicParsing="false" onMouseReleased="#outsourced_selected" text="Outsourced" toggleGroup="$attainment" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="45.326171875" />
+      <Text layoutX="48.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="109.431640625" />
+      <TextField fx:id="id" disable="true" editable="false" layoutX="146.0" layoutY="105.0" promptText="Auto Gen- Disabled" AnchorPane.leftAnchor="146.0" AnchorPane.topAnchor="105.0" />
+      <Text layoutX="48.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" AnchorPane.leftAnchor="48.0" />
+      <TextField fx:id="name" layoutX="146.0" layoutY="139.0" AnchorPane.leftAnchor="146.0" AnchorPane.topAnchor="139.0" />
+      <TextField fx:id="inventory" layoutX="146.0" layoutY="173.0" AnchorPane.leftAnchor="146.0" AnchorPane.topAnchor="173.0" />
+      <TextField fx:id="price" layoutX="146.0" layoutY="206.0" AnchorPane.leftAnchor="146.0" AnchorPane.topAnchor="206.0" />
+      <TextField fx:id="max" layoutX="146.0" layoutY="239.0" AnchorPane.leftAnchor="146.0" AnchorPane.topAnchor="239.0" />
+      <TextField fx:id="min" layoutX="389.0" layoutY="239.0" AnchorPane.leftAnchor="389.0" AnchorPane.topAnchor="239.0" />
+      <TextField fx:id="dynamic_textbox" layoutX="146.0" layoutY="271.0" AnchorPane.leftAnchor="146.0" AnchorPane.topAnchor="271.0" />
+      <Text fx:id="dynamic_field" layoutX="48.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Machine ID" AnchorPane.leftAnchor="48.0" />
+      <Text layoutX="48.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inv" AnchorPane.leftAnchor="48.0" />
+      <Text layoutX="48.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price/Cost" AnchorPane.leftAnchor="48.0" />
+      <Text layoutX="48.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Max" AnchorPane.leftAnchor="48.0" />
+      <Text layoutX="339.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min" AnchorPane.leftAnchor="339.0" AnchorPane.topAnchor="243.0" />
+      <Button layoutX="322.0" layoutY="325.0" mnemonicParsing="false" onMouseReleased="#on_save" text="Save" AnchorPane.leftAnchor="322.0" AnchorPane.topAnchor="325.0" />
+      <Button layoutX="389.0" layoutY="325.0" mnemonicParsing="false" onMouseReleased="#on_cancel" text="Cancle" AnchorPane.leftAnchor="389.0" AnchorPane.topAnchor="325.0" />
+   </children>
+</AnchorPane>

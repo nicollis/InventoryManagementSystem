@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="373.0" styleClass="parts-and-products-container" stylesheets="@part-and-products-style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.ollis.wgu.inventorymanagementsystem.ProductsViewController">
+   <children>
+      <AnchorPane prefHeight="48.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="14.0" layoutY="27.0" text="Products" textAlignment="CENTER" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="20.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="search_field" layoutX="425.0" layoutY="19.0" onKeyReleased="#on_search" promptText="Search by Product ID or Name" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="20.0" />
+         </children>
+      </AnchorPane>
+      <TableView fx:id="table_view" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="idColumn" editable="false" prefWidth="75.0" text="Product ID" />
+          <TableColumn fx:id="nameColumn" editable="false" prefWidth="99.0" text="Product Name" />
+            <TableColumn fx:id="inventoryColumn" editable="false" prefWidth="99.0" text="Inventory Level" />
+            <TableColumn fx:id="priceColumn" editable="false" prefWidth="99.0" text="Price / Cost Unit" />
+        </columns>
+      </TableView>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0">
+        <buttons>
+          <Button mnemonicParsing="false" onMouseReleased="#on_add" text="Add" />
+            <Button mnemonicParsing="false" onMouseReleased="#on_modify" text="Modify" />
+            <Button mnemonicParsing="false" onMouseReleased="#on_delete" text="Delete" />
+        </buttons>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets right="20.0" />
+         </padding>
+      </ButtonBar>
+   </children>
+</VBox>
