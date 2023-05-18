@@ -1,10 +1,13 @@
 package dev.ollis.wgu.inventorymanagementsystem;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -27,6 +30,7 @@ public class ProductsFormViewController implements Initializable {
     public TableColumn<Part, String> incNameColumn;
     public TableColumn<Part, Integer> incInventoryColumn;
     public TableColumn<Part, Double> incPriceColumn;
+    public TextField id;
     public TextField name;
     public TextField inventory;
     public TextField price;
@@ -35,7 +39,7 @@ public class ProductsFormViewController implements Initializable {
 
     private boolean is_add;
 
-    private final Product product = new Product();
+    private Product product = new Product();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -69,15 +73,27 @@ public class ProductsFormViewController implements Initializable {
     }
 
     public void on_save(MouseEvent mouseEvent) {
-        product.setId(Inventory.getAllProducts().get(Inventory.getAllProducts().size() - 1).getId() + 1);
-        product.setName(name.getText());
-        product.setPrice(Double.parseDouble(price.getText()));
-        product.setStock(Integer.parseInt(inventory.getText()));
-        product.setMin(Integer.parseInt(min.getText()));
-        product.setMax(Integer.parseInt(max.getText()));
+        if (is_add) {
+            saveNewProduct();
+        } else {
+            saveModifiedProduct();
+        }
+    }
 
-        Inventory.addProduct(product);
-        close();
+    public void on_search(KeyEvent inputMethodEvent) {
+        String search_term = search_field.getText();
+        if (search_term.isEmpty()) {
+            all_parts_list.setItems(Inventory.getAllParts());
+            return;
+        }
+
+        try {
+            ObservableList<Part> parts = FXCollections.observableArrayList(Inventory.lookupPart(Integer.parseInt(search_term)));
+            all_parts_list.setItems(parts);
+        } catch (NumberFormatException e) {
+            ObservableList<Part> parts = Inventory.lookupPart(search_term);
+            all_parts_list.setItems(parts);
+        }
     }
 
     public void set_is_add(boolean is_add) {
@@ -85,7 +101,44 @@ public class ProductsFormViewController implements Initializable {
         title_text.setText(is_add ? "Add a Product" : "Modify a Product");
     }
 
-    public void close() {
+    public void set_product(Product product) {
+        this.product = product;
+        id.setText(String.valueOf(product.getId()));
+        name.setText(product.getName());
+        price.setText(String.valueOf(product.getPrice()));
+        inventory.setText(String.valueOf(product.getStock()));
+        min.setText(String.valueOf(product.getMin()));
+        max.setText(String.valueOf(product.getMax()));
+        included_parts_list.setItems(product.getAllAssociatedParts());
+    }
+
+    private void saveNewProduct() {
+        int id = Inventory.getAllProducts().get(Inventory.getAllProducts().size() - 1).getId() + 1;
+        Product product = createProduct(id);
+
+        Inventory.addProduct(product);
+        close();
+    }
+
+    private void saveModifiedProduct() {
+        int index = Inventory.getAllProducts().indexOf(product);
+        Product product = createProduct(this.product.getId());
+
+        Inventory.updateProduct(index, product);
+        close();
+    }
+
+    private Product createProduct(int id) {
+        this.product.setId(id);
+        this.product.setName(name.getText());
+        this.product.setPrice(Double.parseDouble(price.getText()));
+        this.product.setStock(Integer.parseInt(inventory.getText()));
+        this.product.setMin(Integer.parseInt(min.getText()));
+        this.product.setMax(Integer.parseInt(max.getText()));
+        return this.product;
+    }
+
+    private void close() {
         Stage stage = (Stage) title_text.getScene().getWindow();
         stage.close();
     }

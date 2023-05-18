@@ -1,7 +1,6 @@
 package dev.ollis.wgu.inventorymanagementsystem;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
@@ -11,7 +10,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PartsFormViewController implements Initializable {
+public class PartsFormViewController {
     public TextField dynamic_textbox;
     public Text dynamic_field;
     public Text title_text;
@@ -27,10 +26,6 @@ public class PartsFormViewController implements Initializable {
     private boolean is_add = true;
     private Part part;
     private boolean is_inhouse = true;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-    }
 
     public void inhouse_selected(MouseEvent mouseEvent) {
         dynamic_field.setText("Machine ID");

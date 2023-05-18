@@ -40,11 +40,11 @@ public class ProductsViewController implements Initializable {
     }
 
     public void on_add(MouseEvent mouseEvent) throws IOException {
-        open_products_form(true);
+        open_products_form(true, null);
     }
 
     public void on_modify(MouseEvent mouseEvent) throws IOException {
-        open_products_form(false);
+        open_products_form(false, table_view.getSelectionModel().getSelectedItem());
     }
 
     public void on_delete(MouseEvent mouseEvent) {
@@ -52,12 +52,15 @@ public class ProductsViewController implements Initializable {
         Inventory.deleteProduct(product);
     }
 
-    private void open_products_form(boolean is_add) throws IOException {
+    private void open_products_form(boolean is_add, Product product) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("products-form.fxml"));
         Scene scene = new Scene(loader.load(), 950, 580);
 
         ProductsFormViewController controller = loader.getController();
         controller.set_is_add(is_add);
+        if (product != null) {
+            controller.set_product(product);
+        }
 
         Stage stage = new Stage();
         stage.setTitle(is_add ? "Add a Product" : "Modify a Product");

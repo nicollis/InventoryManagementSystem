@@ -11,8 +11,8 @@
             <Font name="Arial Bold" size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="search_field" layoutX="747.0" layoutY="43.0" promptText="Search by Part ID or Name" />
-      <TextField disable="true" layoutX="95.0" layoutY="108.0" promptText="Auto Gen - Disabled" />
+      <TextField fx:id="search_field" layoutX="747.0" layoutY="43.0" onKeyReleased="#on_search" promptText="Search by Part ID or Name" />
+      <TextField fx:id="id" disable="true" layoutX="95.0" layoutY="108.0" promptText="Auto Gen - Disabled" />
       <TextField fx:id="name" layoutX="95.0" layoutY="146.0" />
       <TextField fx:id="inventory" layoutX="95.0" layoutY="182.0" prefHeight="25.0" prefWidth="109.0" />
       <TextField fx:id="price" layoutX="95.0" layoutY="217.0" prefHeight="25.0" prefWidth="109.0" />
