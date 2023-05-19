@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"dev.ollis.wgu.inventorymanagementsystem","l":"dev.ollis.wgu.inventorymanagementsystem"}];updateSearchResults();
