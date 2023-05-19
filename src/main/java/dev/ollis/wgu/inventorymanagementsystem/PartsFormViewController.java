@@ -7,7 +7,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * Controller for the parts form view.
+ * @author Nicholas Ollis
+ */
 public class PartsFormViewController {
+    // One small issue was a text field that can be two things, I settled by naming it 'dynamic_textbox'
     public TextField dynamic_textbox;
     public Text dynamic_field;
     public Text title_text;
@@ -24,18 +29,30 @@ public class PartsFormViewController {
     private Part part;
     private boolean is_inhouse = true; // used to store the state of the radio buttons
 
+    /**
+     * Called when the inhouse radio button is selected.
+     * @param mouseEvent Ignored
+     */
     public void inhouse_selected(MouseEvent mouseEvent) {
         dynamic_field.setText("Machine ID");
         dynamic_textbox.setText("");
         is_inhouse = true;
     }
 
+    /**
+     * Called when the outsourced radio button is selected.
+     * @param mouseEvent Ignored
+     */
     public void outsourced_selected(MouseEvent mouseEvent) {
         dynamic_field.setText("Company Name");
         dynamic_textbox.setText("");
         is_inhouse = false;
     }
 
+    /**
+     * Called when the save button is clicked.
+     * @param mouseEvent Ignored
+     */
     public void on_save(MouseEvent mouseEvent) {
         if (is_add) {
             saveNewPart();
@@ -44,16 +61,29 @@ public class PartsFormViewController {
         }
     }
 
-    @FXML
+    /**
+     * Called when the cancel button is clicked.
+     * @param mouseEvent Ignored
+     */
     public void on_cancel(MouseEvent mouseEvent) {
         close();
     }
 
+    /**
+     * Sets the form to add a new part or modify an existing one.
+     * To avoid having to create two separate forms, this method is used to set the form to either add a new part or modify an existing one.
+     * @param is_add True if adding a new part, false if modifying an existing one.
+     * FUTURE ENHANCEMENT: This method could be replaced by a check if part is null.
+     */
     public void set_is_add(boolean is_add) {
         this.is_add = is_add;
         title_text.setText(is_add ? "Add a Part" : "Modify a Part");
     }
 
+    /**
+     * Sets the part to modify.
+     * @param part The part to modify.
+     */
     public void set_part(Part part) {
         this.part = part;
         id.setText(Integer.toString(part.getId()));
@@ -74,6 +104,10 @@ public class PartsFormViewController {
         }
     }
 
+    /**
+     * Saves a new part to the inventory.
+     * Closes the form after saving.
+     */
     private void saveNewPart() {
         int id = Inventory.getAllParts().get(Inventory.getAllParts().size() - 1).getId() + 1;
         Part part = createPart(id);
@@ -85,6 +119,10 @@ public class PartsFormViewController {
         close();
     }
 
+    /**
+     * Saves a modified part to the inventory.
+     * Closes the form after saving.
+     */
     private void saveModifiedPart() {
         int index = Inventory.getAllParts().indexOf(this.part);
         Part part = createPart(this.part.getId());
@@ -96,6 +134,12 @@ public class PartsFormViewController {
         close();
     }
 
+    /**
+     * Creates a part from the form data or returns null if the data is invalid.
+     * @param id
+     * @return Part or null if the data is invalid.
+     * RUNTIME ERROR: I had a bug where the program would crash if data could not be parse correctly.
+     */
     private Part createPart(int id) {
         String name = this.name.getText();
         int stock, max, min;
@@ -163,6 +207,9 @@ public class PartsFormViewController {
         }
     }
 
+    /**
+     * Closes the form.
+     */
     private void close() {
         Stage stage = (Stage) title_text.getScene().getWindow();
         stage.close();

@@ -2,7 +2,6 @@ package dev.ollis.wgu.inventorymanagementsystem;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -16,6 +15,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Product View Controller
+ * @author Nicholas Ollis
+ */
 public class ProductsViewController implements Initializable {
 
     public TableView<Product> table_view;
@@ -24,9 +27,13 @@ public class ProductsViewController implements Initializable {
     public TableColumn<Product, Integer> inventoryColumn;
     public TableColumn<Product, Double> priceColumn;
 
-    @FXML
     protected TextField search_field;
 
+    /**
+     * Initializes the controller class.
+     * @param url Ignored
+     * @param resourceBundle Ignored
+     */
     @Override
     public void initialize(java.net.URL url, java.util.ResourceBundle resourceBundle) {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -39,10 +46,20 @@ public class ProductsViewController implements Initializable {
         table_view.setItems(allParts);
     }
 
+    /**
+     * Opens the add product form
+     * @param mouseEvent Ignored
+     * @throws IOException Ignored
+     */
     public void on_add(MouseEvent mouseEvent) throws IOException {
         open_products_form(true, null);
     }
 
+    /**
+     * Opens the modify product form
+     * @param mouseEvent Ignored
+     * @throws IOException Ignored
+     */
     public void on_modify(MouseEvent mouseEvent) throws IOException {
         Product product = table_view.getSelectionModel().getSelectedItem();
         if (product == null) {
@@ -52,6 +69,10 @@ public class ProductsViewController implements Initializable {
         open_products_form(false, product);
     }
 
+    /**
+     * Deletes the selected product
+     * @param mouseEvent Ignored
+     */
     public void on_delete(MouseEvent mouseEvent) {
         Product product = table_view.getSelectionModel().getSelectedItem();
         if (product == null) {
@@ -69,6 +90,12 @@ public class ProductsViewController implements Initializable {
         }
     }
 
+    /**
+     * Opens the products form
+     * @param is_add Whether the form is for adding a product
+     * @param product The product to modify, or null if adding
+     * @throws IOException Ignored
+     */
     private void open_products_form(boolean is_add, Product product) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("products-form.fxml"));
         Scene scene = new Scene(loader.load(), 950, 580);
@@ -85,6 +112,10 @@ public class ProductsViewController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Searches for products
+     * @param keyEvent Ignored
+     */
     public void on_search(KeyEvent keyEvent) {
         String search_term = search_field.getText();
         if (search_term.isEmpty()) {
@@ -107,6 +138,11 @@ public class ProductsViewController implements Initializable {
         }
     }
 
+    /**
+     * Handles search errors
+     * @param search_term The search term
+     * @return The list of products
+     */
     private ObservableList<Product> on_search_error(String search_term) {
         Popup.error("No results", "No products found for search term: " + search_term);
         search_field.setText("");

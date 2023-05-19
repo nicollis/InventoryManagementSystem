@@ -15,6 +15,10 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the products form view
+ * @author Nicholas Ollis
+ */
 public class ProductsFormViewController implements Initializable {
     public Text title_text;
     public TextField search_field;
@@ -41,6 +45,12 @@ public class ProductsFormViewController implements Initializable {
 
     private Product product = new Product();
 
+    /**
+     * Initializes the view
+     * Sets up the table columns and populates the tables
+     * @param url Ignored
+     * @param resourceBundle Ignored
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         allIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -58,11 +68,19 @@ public class ProductsFormViewController implements Initializable {
         included_parts_list.setItems(product.getAllAssociatedParts());
     }
 
+    /**
+     * Called when the add button is clicked
+     * @param mouseEvent Ignored
+     */
     public void on_add(MouseEvent mouseEvent) {
         Part part = all_parts_list.getSelectionModel().getSelectedItem();
         product.addAssociatedPart(part);
     }
 
+    /**
+     * Called when the remove button is clicked
+     * @param mouseEvent Ignored
+     */
     public void on_remove(MouseEvent mouseEvent) {
         Part part = included_parts_list.getSelectionModel().getSelectedItem();
 
@@ -71,10 +89,18 @@ public class ProductsFormViewController implements Initializable {
         }
     }
 
+    /**
+     * Called when the cancel button is clicked
+     * @param mouseEvent Ignored
+     */
     public void on_cancel(MouseEvent mouseEvent) {
         close();
     }
 
+    /**
+     * Called when the save button is clicked
+     * @param mouseEvent Ignored
+     */
     public void on_save(MouseEvent mouseEvent) {
         if (is_add) {
             saveNewProduct();
@@ -83,6 +109,11 @@ public class ProductsFormViewController implements Initializable {
         }
     }
 
+    /**
+     * Called when the search field is updated
+     * @param inputMethodEvent Ignored
+     * RUNTIME ERROR: When searching for a part by ID, the search field would be cleared
+     */
     public void on_search(KeyEvent inputMethodEvent) {
         String search_term = search_field.getText();
         if (search_term.isEmpty()) {
@@ -105,17 +136,30 @@ public class ProductsFormViewController implements Initializable {
         }
     }
 
+    /**
+     * Generates an error popup when a search returns no results.
+     * @param search_term The search term
+     */
     private ObservableList<Part> on_search_error(String search_term) {
         Popup.error("No results", "No parts found for search term: " + search_term);
         search_field.setText("");
         return Inventory.getAllParts();
     }
 
+    /**
+     * sets the context of if the form is adding or modifying a product
+     * @param is_add True if adding, false if modifying
+     */
     public void set_is_add(boolean is_add) {
         this.is_add = is_add;
         title_text.setText(is_add ? "Add a Product" : "Modify a Product");
     }
 
+    /**
+     * Sets the product to be modified
+     * populates the form with the product's data
+     * @param product The product to be modified
+     */
     public void set_product(Product product) {
         this.product = product;
         id.setText(String.valueOf(product.getId()));
@@ -127,6 +171,9 @@ public class ProductsFormViewController implements Initializable {
         included_parts_list.setItems(product.getAllAssociatedParts());
     }
 
+    /**
+     * Saves a new product to the inventory
+     */
     private void saveNewProduct() {
         int id = Inventory.getAllProducts().get(Inventory.getAllProducts().size() - 1).getId() + 1;
         Product product = createProduct(id);
@@ -138,6 +185,9 @@ public class ProductsFormViewController implements Initializable {
         close();
     }
 
+    /**
+     * Saves a modified product to the inventory
+     */
     private void saveModifiedProduct() {
         int index = Inventory.getAllProducts().indexOf(product);
         Product product = createProduct(this.product.getId());
@@ -149,6 +199,11 @@ public class ProductsFormViewController implements Initializable {
         close();
     }
 
+    /**
+     * Creates a product from the form data
+     * @param id
+     * @return The created product, or null if there was an error
+     */
     private Product createProduct(int id) {
         int stock, min, max;
         double price;
@@ -194,6 +249,9 @@ public class ProductsFormViewController implements Initializable {
         }
     }
 
+    /**
+     * Closes the form
+     */
     private void close() {
         Stage stage = (Stage) title_text.getScene().getWindow();
         stage.close();

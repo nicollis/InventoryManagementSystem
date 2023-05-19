@@ -4,19 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a5f139fd-3354-4e67-bec2-9cfdc47128fa" name="Changes" comment="Added search and modify logic to products">
-      <change afterPath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/Popup.java" afterDir="false" />
+    <list default="true" id="a5f139fd-3354-4e67-bec2-9cfdc47128fa" name="Changes" comment="Added error control">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/ApplicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/ApplicationController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/InHouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/InHouse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/Inventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/MainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/MainViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/Outsourced.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/Outsourced.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/Part.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/Part.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/PartsFormViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/PartsFormViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/PartsViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/PartsViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/Popup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/Popup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/Product.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/ProductsFormViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/ProductsFormViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/ProductsViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/ollis/wgu/inventorymanagementsystem/ProductsViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dev/ollis/wgu/inventorymanagementsystem/part-and-products-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dev/ollis/wgu/inventorymanagementsystem/part-and-products-style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dev/ollis/wgu/inventorymanagementsystem/parts-form.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dev/ollis/wgu/inventorymanagementsystem/parts-form.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +93,7 @@
       <workItem from="1684270164850" duration="15760000" />
       <workItem from="1684360680201" duration="2989000" />
       <workItem from="1684375823763" duration="22494000" />
-      <workItem from="1684458477100" duration="8765000" />
+      <workItem from="1684458477100" duration="12202000" />
     </task>
     <task id="LOCAL-00001" summary="All views and logic to add, search, and delete&#10;As well as modify the parts list.">
       <created>1684447834409</created>
@@ -109,7 +109,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684449014934</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added error control">
+      <created>1684469561414</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1684469561414</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -130,7 +137,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="All views and logic to add, search, and delete&#10;As well as modify the parts list." />
     <MESSAGE value="Added search and modify logic to products" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added search and modify logic to products" />
+    <MESSAGE value="Added error control" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added error control" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
