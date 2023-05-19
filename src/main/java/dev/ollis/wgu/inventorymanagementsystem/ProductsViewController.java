@@ -44,12 +44,29 @@ public class ProductsViewController implements Initializable {
     }
 
     public void on_modify(MouseEvent mouseEvent) throws IOException {
-        open_products_form(false, table_view.getSelectionModel().getSelectedItem());
+        Product product = table_view.getSelectionModel().getSelectedItem();
+        if (product == null) {
+            Popup.error("Error", "Please select a product to modify.");
+            return;
+        }
+        open_products_form(false, product);
     }
 
     public void on_delete(MouseEvent mouseEvent) {
         Product product = table_view.getSelectionModel().getSelectedItem();
-        Inventory.deleteProduct(product);
+        if (product == null) {
+            Popup.error("Error", "Please select a product to delete.");
+            return;
+        }
+        if (product.getAllAssociatedParts().size() > 0) {
+            Popup.error("Error", "Product has associated parts and cannot be deleted.");
+            return;
+        }
+        if (Popup.showConfirmationDialog("Delete Product", "Are you sure you want to delete this product?")) {
+            if (!Inventory.deleteProduct(product)) {
+                Popup.error("Error", "Product could not be deleted.");
+            }
+        }
     }
 
     private void open_products_form(boolean is_add, Product product) throws IOException {
@@ -77,10 +94,22 @@ public class ProductsViewController implements Initializable {
 
         try {
             ObservableList<Product> products = FXCollections.observableArrayList(Inventory.lookupProduct(Integer.parseInt(search_term)));
+            if (products.isEmpty()) {
+                products = on_search_error(search_term);
+            }
             table_view.setItems(products);
         } catch (NumberFormatException e) {
             ObservableList<Product> products = Inventory.lookupProduct(search_term);
+            if (products.isEmpty()) {
+                products = on_search_error(search_term);
+            }
             table_view.setItems(products);
         }
+    }
+
+    private ObservableList<Product> on_search_error(String search_term) {
+        Popup.error("No results", "No products found for search term: " + search_term);
+        search_field.setText("");
+        return Inventory.getAllProducts();
     }
 }

@@ -15,13 +15,20 @@ public abstract class Part {
     private int stock;
     private int min;
     private int max;    
-    public Part(int id, String name, double price, int stock, int min, int max) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.stock = stock;
-        this.min = min;
-        this.max = max;
+    public Part(int id, String name, double price, int stock, int min, int max) throws IllegalArgumentException {
+        setId(id);
+        setName(name);
+        setPrice(price);
+        setStock(stock);
+        setMin(min);
+        setMax(max);
+
+        if (min > max) {
+            throw new IllegalArgumentException("Min must be less than max");
+        }
+        if (stock < min || stock > max) {
+            throw new IllegalArgumentException("Inventory must be between min and max");
+        }
     }
 
     /**
@@ -90,7 +97,7 @@ public abstract class Part {
     /**
      * @param min the min to set
      */
-    public void setMin(int min) {
+    public void setMin(int min) throws IllegalArgumentException {
         this.min = min;
     }
 
@@ -104,7 +111,7 @@ public abstract class Part {
     /**
      * @param max the max to set
      */
-    public void setMax(int max) {
+    public void setMax(int max) throws IllegalArgumentException {
         this.max = max;
     }
     

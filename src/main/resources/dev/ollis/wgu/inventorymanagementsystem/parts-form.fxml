@@ -32,6 +32,6 @@
       <Text layoutX="48.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Max" AnchorPane.leftAnchor="48.0" />
       <Text layoutX="339.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min" AnchorPane.leftAnchor="339.0" AnchorPane.topAnchor="243.0" />
       <Button layoutX="322.0" layoutY="325.0" mnemonicParsing="false" onMouseReleased="#on_save" text="Save" AnchorPane.leftAnchor="322.0" AnchorPane.topAnchor="325.0" />
-      <Button layoutX="389.0" layoutY="325.0" mnemonicParsing="false" onMouseReleased="#on_cancel" text="Cancle" AnchorPane.leftAnchor="389.0" AnchorPane.topAnchor="325.0" />
+      <Button layoutX="389.0" layoutY="325.0" mnemonicParsing="false" onMouseReleased="#on_cancel" text="Cancel" AnchorPane.leftAnchor="389.0" AnchorPane.topAnchor="325.0" />
    </children>
 </AnchorPane>

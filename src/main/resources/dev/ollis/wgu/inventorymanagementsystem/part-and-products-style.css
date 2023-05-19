@@ -7,7 +7,6 @@
 }
 
 .products-form-container {
-    -fx-background-color: transparent;
     -fx-border-color: black;
     -fx-border-width: 2px;
     -fx-border-radius: 10px;

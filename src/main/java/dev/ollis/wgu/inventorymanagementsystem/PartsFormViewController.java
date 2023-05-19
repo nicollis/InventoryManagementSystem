@@ -7,9 +7,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 public class PartsFormViewController {
     public TextField dynamic_textbox;
     public Text dynamic_field;
@@ -25,7 +22,7 @@ public class PartsFormViewController {
 
     private boolean is_add = true;
     private Part part;
-    private boolean is_inhouse = true;
+    private boolean is_inhouse = true; // used to store the state of the radio buttons
 
     public void inhouse_selected(MouseEvent mouseEvent) {
         dynamic_field.setText("Machine ID");
@@ -80,6 +77,9 @@ public class PartsFormViewController {
     private void saveNewPart() {
         int id = Inventory.getAllParts().get(Inventory.getAllParts().size() - 1).getId() + 1;
         Part part = createPart(id);
+        if (part == null) {
+            return;
+        }
 
         Inventory.addPart(part);
         close();
@@ -88,6 +88,9 @@ public class PartsFormViewController {
     private void saveModifiedPart() {
         int index = Inventory.getAllParts().indexOf(this.part);
         Part part = createPart(this.part.getId());
+        if (part == null) {
+            return;
+        }
 
         Inventory.updatePart(index, part);
         close();
@@ -95,28 +98,69 @@ public class PartsFormViewController {
 
     private Part createPart(int id) {
         String name = this.name.getText();
-        int stock = Integer.parseInt(inventory.getText());
-        double price = Double.parseDouble(this.price.getText());
-        int max = Integer.parseInt(this.max.getText());
-        int min = Integer.parseInt(this.min.getText());
+        int stock, max, min;
+        double price;
 
-        return is_inhouse ? new InHouse(
-                id,
-                name,
-                price,
-                stock,
-                min,
-                max,
-                Integer.parseInt(dynamic_textbox.getText())
-        ) : new Outsourced(
-                id,
-                name,
-                price,
-                stock,
-                min,
-                max,
-                dynamic_textbox.getText()
-        );
+        try {
+            stock =  Integer.parseInt(inventory.getText());
+        } catch (NumberFormatException e) {
+            Popup.error("Invalid Part", "Inventory must be a number");
+            return null;
+        }
+        try {
+            price = Double.parseDouble(this.price.getText());
+        } catch (NumberFormatException e) {
+            Popup.error("Invalid Part", "Price must be a number");
+            return null;
+        }
+        try {
+            max = Integer.parseInt(this.max.getText());
+        } catch (NumberFormatException e) {
+            Popup.error("Invalid Part", "Max must be a number");
+            return null;
+        }
+        try {
+            min = Integer.parseInt(this.min.getText());
+        } catch (NumberFormatException e) {
+            Popup.error("Invalid Part", "Min must be a number");
+            return null;
+        }
+
+        try {
+            if (is_inhouse) {
+                if (dynamic_textbox.getText().isEmpty()) {
+                    return new InHouse(id, name, price, stock, min, max);
+                } else {
+                    try {
+                        return new InHouse(
+                                id,
+                                name,
+                                price,
+                                stock,
+                                min,
+                                max,
+                                Integer.parseInt(dynamic_textbox.getText())
+                        );
+                    } catch (NumberFormatException e) {
+                        Popup.error("Invalid Part", "Machine ID must be a number");
+                        return null;
+                    }
+                }
+            } else {
+                return new Outsourced(
+                        id,
+                        name,
+                        price,
+                        stock,
+                        min,
+                        max,
+                        dynamic_textbox.getText()
+                );
+            }
+        } catch (IllegalArgumentException e) {
+            Popup.error("Invalid Part", e.getMessage());
+            return null;
+        }
     }
 
     private void close() {

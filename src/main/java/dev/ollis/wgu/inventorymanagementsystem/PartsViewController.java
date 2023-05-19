@@ -41,12 +41,24 @@ public class PartsViewController implements Initializable {
 
     public void on_modify(MouseEvent mouseEvent) throws IOException {
         Part part = table_view.getSelectionModel().getSelectedItem();
+        if (part == null) {
+            Popup.error("Error", "Please select a part to modify.");
+            return;
+        }
         open_parts_form(false, part);
     }
 
     public void on_delete(MouseEvent mouseEvent) {
         Part part = table_view.getSelectionModel().getSelectedItem();
-        Inventory.deletePart(part);
+        if (part == null) {
+            Popup.error("Error", "Please select a part to delete.");
+            return;
+        }
+        if (Popup.showConfirmationDialog("Delete Part", "Are you sure you want to delete this part?")) {
+            if (!Inventory.deletePart(part)) {
+                Popup.error("Error", "Part is associated with a product and cannot be deleted.");
+            }
+        }
     }
 
     private void open_parts_form(boolean is_add, Part selected_part) throws IOException {
@@ -74,10 +86,22 @@ public class PartsViewController implements Initializable {
 
         try {
             ObservableList<Part> parts = FXCollections.observableArrayList(Inventory.lookupPart(Integer.parseInt(search_term)));
+            if (parts.isEmpty()) {
+                parts = on_search_error(search_term);
+            }
             table_view.setItems(parts);
         } catch (NumberFormatException e) {
             ObservableList<Part> parts = Inventory.lookupPart(search_term);
+            if (parts.isEmpty()) {
+                parts = on_search_error(search_term);
+            }
             table_view.setItems(parts);
         }
+    }
+
+    private ObservableList<Part> on_search_error(String search_term) {
+        Popup.error("No results", "No parts found for search term: " + search_term);
+        search_field.setText("");
+        return Inventory.getAllParts();
     }
 }

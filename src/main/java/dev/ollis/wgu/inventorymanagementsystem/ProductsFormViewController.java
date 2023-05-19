@@ -65,7 +65,10 @@ public class ProductsFormViewController implements Initializable {
 
     public void on_remove(MouseEvent mouseEvent) {
         Part part = included_parts_list.getSelectionModel().getSelectedItem();
-        product.deleteAssociatedPart(part);
+
+        if (Popup.showConfirmationDialog("Remove Part", "Are you sure you want to remove this part?")) {
+            product.deleteAssociatedPart(part);
+        }
     }
 
     public void on_cancel(MouseEvent mouseEvent) {
@@ -89,11 +92,23 @@ public class ProductsFormViewController implements Initializable {
 
         try {
             ObservableList<Part> parts = FXCollections.observableArrayList(Inventory.lookupPart(Integer.parseInt(search_term)));
+            if (parts.isEmpty()) {
+                parts = on_search_error(search_term);
+            }
             all_parts_list.setItems(parts);
         } catch (NumberFormatException e) {
             ObservableList<Part> parts = Inventory.lookupPart(search_term);
+            if (parts.isEmpty()) {
+                parts = on_search_error(search_term);
+            }
             all_parts_list.setItems(parts);
         }
+    }
+
+    private ObservableList<Part> on_search_error(String search_term) {
+        Popup.error("No results", "No parts found for search term: " + search_term);
+        search_field.setText("");
+        return Inventory.getAllParts();
     }
 
     public void set_is_add(boolean is_add) {
@@ -115,6 +130,9 @@ public class ProductsFormViewController implements Initializable {
     private void saveNewProduct() {
         int id = Inventory.getAllProducts().get(Inventory.getAllProducts().size() - 1).getId() + 1;
         Product product = createProduct(id);
+        if (product == null) {
+            return;
+        }
 
         Inventory.addProduct(product);
         close();
@@ -123,19 +141,57 @@ public class ProductsFormViewController implements Initializable {
     private void saveModifiedProduct() {
         int index = Inventory.getAllProducts().indexOf(product);
         Product product = createProduct(this.product.getId());
+        if (product == null) {
+            return;
+        }
 
         Inventory.updateProduct(index, product);
         close();
     }
 
     private Product createProduct(int id) {
+        int stock, min, max;
+        double price;
+
+        try {
+            stock = Integer.parseInt(inventory.getText());
+        } catch (NumberFormatException e) {
+            Popup.error("Invalid Inventory", "Inventory must be a number");
+            return null;
+        }
+        try {
+            price = Double.parseDouble(this.price.getText());
+        } catch (NumberFormatException e) {
+            Popup.error("Invalid Price", "Price must be a number");
+            return null;
+        }
+        try {
+            min = Integer.parseInt(this.min.getText());
+        } catch (NumberFormatException e) {
+            Popup.error("Invalid Min", "Min must be a number");
+            return null;
+        }
+        try {
+            max = Integer.parseInt(this.max.getText());
+        } catch (NumberFormatException e) {
+            Popup.error("Invalid Max", "Max must be a number");
+            return null;
+        }
+
         this.product.setId(id);
         this.product.setName(name.getText());
-        this.product.setPrice(Double.parseDouble(price.getText()));
-        this.product.setStock(Integer.parseInt(inventory.getText()));
-        this.product.setMin(Integer.parseInt(min.getText()));
-        this.product.setMax(Integer.parseInt(max.getText()));
-        return this.product;
+        this.product.setPrice(price);
+        this.product.setStock(stock);
+        this.product.setMin(min);
+        this.product.setMax(max);
+
+        try {
+            this.product.validateProduct();
+            return this.product;
+        } catch (IllegalArgumentException e) {
+            Popup.error("Invalid Product", e.getMessage());
+            return null;
+        }
     }
 
     private void close() {
